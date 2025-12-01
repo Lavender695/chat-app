@@ -54,5 +54,12 @@
     "userId": "12",
     "content": "test",
     "timestamp": "2025-12-01T05:14:43.629Z"
+  },
+  {
+    "type": "message",
+    "id": "bb5dd441-d066-44e0-8745-b12bda68bacc",
+    "userId": "11",
+    "content": "你好",
+    "timestamp": "2025-12-01T06:50:36.640Z"
   }
 ]
