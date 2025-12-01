@@ -1,6 +1,37 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
+// 存储工具函数
+const storage = {
+  // 保存数据
+  setItem: (key, value) => {
+    // 检查是否在Android环境中运行
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    
+    if (isAndroid && window.Android && window.Android.setStorageItem) {
+      // 使用Android原生存储方法
+      window.Android.setStorageItem(key, value)
+    } else {
+      // 使用Web Storage API
+      localStorage.setItem(key, value)
+    }
+  },
+  
+  // 获取数据
+  getItem: (key) => {
+    // 检查是否在Android环境中运行
+    const isAndroid = /Android/i.test(navigator.userAgent)
+    
+    if (isAndroid && window.Android && window.Android.getStorageItem) {
+      // 使用Android原生存储方法
+      return window.Android.getStorageItem(key)
+    } else {
+      // 使用Web Storage API
+      return localStorage.getItem(key)
+    }
+  }
+}
+
 function App() {
   const [userId, setUserId] = useState('')
   const [loggedIn, setLoggedIn] = useState(false)
@@ -45,19 +76,40 @@ function App() {
           
           if (data.type === 'message') {
             // 添加新消息
-            setMessages(prev => [...prev, data])
+            setMessages(prev => {
+              const newMessages = [...prev, data]
+              // 保存消息到本地存储
+              storage.setItem('chat_messages', JSON.stringify(newMessages))
+              return newMessages
+            })
           } else if (data.type === 'userList') {
             // 更新用户列表
             setUsers(data.users)
           } else if (data.type === 'loginSuccess') {
             console.log('登录成功')
-            // 如果有历史消息，加载历史消息
+            // 尝试从本地存储加载历史消息
+            const savedMessages = storage.getItem('chat_messages')
+            if (savedMessages) {
+              try {
+                setMessages(JSON.parse(savedMessages))
+              } catch (error) {
+                console.error('解析本地存储的消息失败：', error)
+              }
+            }
+            // 如果服务器有历史消息，优先使用服务器消息
             if (data.historyMessages && data.historyMessages.length > 0) {
               setMessages(data.historyMessages)
+              // 将服务器消息保存到本地存储
+              storage.setItem('chat_messages', JSON.stringify(data.historyMessages))
             }
           } else if (data.type === 'messageDeleted') {
             // 删除消息
-            setMessages(prev => prev.filter(msg => msg.id !== data.messageId))
+            setMessages(prev => {
+              const newMessages = prev.filter(msg => msg.id !== data.messageId)
+              // 更新本地存储
+              storage.setItem('chat_messages', JSON.stringify(newMessages))
+              return newMessages
+            })
           } else if (data.type === 'error') {
             alert(data.message)
           }
@@ -189,7 +241,7 @@ function App() {
     }
     // 重置状态
     setLoggedIn(false)
-    setMessages([])
+    // 保留消息在本地存储中，不清除
     setUsers([])
     setMessage('')
     // 清除右键菜单
