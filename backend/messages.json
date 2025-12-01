@@ -1,0 +1,58 @@
+[
+  {
+    "type": "message",
+    "id": "1",
+    "userId": "12",
+    "content": "你好，这是历史消息测试",
+    "timestamp": "2025-11-30T10:00:00.000Z"
+  },
+  {
+    "type": "message",
+    "id": "2",
+    "userId": "13",
+    "content": "历史消息测试2",
+    "timestamp": "2025-11-30T10:05:00.000Z"
+  },
+  {
+    "type": "message",
+    "id": "3",
+    "userId": "12",
+    "content": "历史消息测试3",
+    "timestamp": "2025-11-30T10:10:00.000Z"
+  },
+  {
+    "type": "message",
+    "id": "11ef7369-0ce8-498e-956c-2209f052d810",
+    "userId": "12",
+    "content": "Nihao",
+    "timestamp": "2025-11-30T14:12:52.525Z"
+  },
+  {
+    "type": "message",
+    "id": "31b9c0cc-80ee-45eb-8c1e-f3900fd3afb9",
+    "userId": "11",
+    "content": "\\(@^0^@)/",
+    "timestamp": "2025-11-30T14:12:58.390Z"
+  },
+  {
+    "type": "message",
+    "id": "507e5174-f764-4094-af5f-388d41d768bf",
+    "userId": "12",
+    "content": "Good day",
+    "timestamp": "2025-11-30T14:13:10.547Z"
+  },
+  {
+    "type": "message",
+    "id": "c383bf5d-314c-45d4-ad5b-8961f633fc42",
+    "userId": "11",
+    "content": "you, too",
+    "timestamp": "2025-11-30T14:13:16.793Z"
+  },
+  {
+    "type": "message",
+    "id": "f0a7d84f-8a4c-4005-b973-d2e3fff1d988",
+    "userId": "12",
+    "content": "test",
+    "timestamp": "2025-12-01T05:14:43.629Z"
+  }
+]
